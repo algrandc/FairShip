@@ -346,11 +346,11 @@ def configure(run,ship_geo):
  emShield.SetSizeX1(ship_geo.EmShield.xSize1)
  emShield.SetSizeY1(ship_geo.EmShield.ySize1)
  emShield.SetSizeZ1(ship_geo.EmShield.zSize1)
- emShield.SetZposition1(ship_geo.EmShield.zPos1)
+ emShield.SetZposition1(ship_geo.EmShield.z1)
  emShield.SetSizeX2(ship_geo.EmShield.xSize2)
  emShield.SetSizeY2(ship_geo.EmShield.ySize2)
  emShield.SetSizeZ2(ship_geo.EmShield.zSize2)
- emShield.SetZposition2(ship_geo.EmShield.zPos2)
+ emShield.SetZposition2(ship_geo.EmShield.z2)
 
  detectorList.append(emShield)
 

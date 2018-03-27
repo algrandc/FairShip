@@ -255,12 +255,15 @@ void EmShield::ConstructGeometry()
   
   InitMedium("Lead");
   TGeoMedium *Scint =gGeoManager->GetMedium("Lead");
+
+  InitMedium("vacuum");
+  TGeoMedium *Vac =gGeoManager->GetMedium("vacuum");
   
   ///////////////////////////////////////////////////////
 
   fDetector = new TGeoVolumeAssembly("Electromagnetic Shield");
 
-  TGeoVolume *plate = gGeoManager->MakeBox("EmShield", Scint, fxSize1,fySize1,fzSize1);
+  TGeoVolume *plate = gGeoManager->MakeBox("EmShield", Vac, fxSize1,fySize1,fzSize1);
   plate->SetLineColor(kYellow);
   AddSensitiveVolume(plate);
   fDetector->AddNode(plate, 1, new TGeoTranslation( fxCenter1,fyCenter1,fzPos1) );

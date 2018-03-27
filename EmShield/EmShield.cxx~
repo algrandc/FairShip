@@ -253,8 +253,8 @@ void EmShield::ConstructGeometry()
 {
   TGeoVolume *top = gGeoManager->GetTopVolume();
   
-  InitMedium("lead");
-  TGeoMedium *Scint =gGeoManager->GetMedium("lead");
+  InitMedium("Lead");
+  TGeoMedium *Scint =gGeoManager->GetMedium("Lead");
   
   ///////////////////////////////////////////////////////
 

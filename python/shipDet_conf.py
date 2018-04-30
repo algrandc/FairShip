@@ -347,6 +347,8 @@ def configure(run,ship_geo):
  emShield.SetSizeY1(ship_geo.EmShield.ySize1)
  emShield.SetSizeZ1(ship_geo.EmShield.zSize1)
  emShield.SetZposition1(ship_geo.EmShield.zPos1)
+ emShield.SetTrapezoid(ship_geo.EmShield.xtrap1,ship_geo.EmShield.trapreg)
+
  emShield.SetSizeX2(ship_geo.EmShield.xSize2)
  emShield.SetSizeY2(ship_geo.EmShield.ySize2)
  emShield.SetSizeZ2(ship_geo.EmShield.zSize2)

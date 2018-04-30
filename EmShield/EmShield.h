@@ -60,10 +60,14 @@ class EmShield: public FairDetector
     void SetSizeZ2(Double_t dz) {fzSize2 = dz;}
     void SetSizeX2(Double_t x) {fxSize2 = x;}
     void SetSizeY2(Double_t y) {fySize2 = y;}
-  /*  double GetXCol(int ic) const;
-    double GetYRow(int ir) const;
-    void GetBarRowCol(int ib,int &irow,int& icol) const;
-    double GetZBar(int ir,int ic) const;*/
+
+    //-------------------------------------------------------------------------------------------------
+    void SetTrapezoid(Double_t dy, Double_t trapvol){
+	fXtrap1=dy; //width of the inner face of the trapezoid
+
+	ftrapregion1=trapvol; //height of the region constituted of trapezoids (1 trapezoid's height is ftrapregion1/2.)
+     }
+
 
     /**  Create the detector geometry */
     void ConstructGeometry();
@@ -103,6 +107,9 @@ class EmShield: public FairDetector
     Double_t fxSize1; //! width of the detector
     Double_t fySize1; //! height of the detector
     Double_t fzSize1;
+
+    Double_t fXtrap1; //width of the trapezoid's inner face
+    Double_t ftrapregion1;
     
     Double_t fxSize2; //! width of the detector
     Double_t fySize2; //! height of the detector
@@ -118,8 +125,8 @@ class EmShield: public FairDetector
     Int_t fNCol;    //! Number of columns
     Int_t fNRow;    //! Number of rows*/
     
-    Double_t fxCenter1; //! x-position of the detector center
-    Double_t fyCenter1; //! y-position of the detector center
+    //Double_t fxCenter1; //! x-position of the detector center
+    //Double_t fyCenter1; //! y-position of the detector center
 
     Double_t fxCenter2; //! x-position of the detector center
     Double_t fyCenter2; //! y-position of the detector center

@@ -680,20 +680,24 @@ c.TimeDet.DY = 500 * u.cm
 #c.EmShield.zPos2=-34.88*u.m
 #c.EmShield.yCenter2=0.*u.m
 
-#if emdesign == 0:
-c.EmShield  =  AttrDict(z=0*u.m)
-c.EmShield.xSize1=3.*u.m
-c.EmShield.ySize1=4.*u.m
-c.EmShield.zSize1=10.*u.cm #max thickness= GapD=27 cm
-c.EmShield.xCenter1=0.*u.m
-c.EmShield.yCenter1=0.*u.m
-#c.EmShield.zPos1=-c.decayVolume.length/2. -c.tauMudet.GapD/2.
-c.EmShield.zPos1=0.5*(-c.decayVolume.length/2-c.tauMudet.GapD + c.Chamber1.z - c.chambers.Tub1length-10.*u.cm-1.*u.cm) #for the "-25 m" one
-#if emdesign ==1:
-#c.EmShield  =  AttrDict(z=-34.88*u.m)
-c.EmShield.xSize2=3.*u.m
-c.EmShield.ySize2=4.*u.m
-c.EmShield.zSize2=10.*u.cm #max is 22cm (between -35 and -34.78)
+
+
+c.EmShield  =  AttrDict(z=0*u.m) 
+c.EmShield.xSize1=3.2*u.m # -35 one
+c.EmShield.ySize1=6.*u.m
+c.EmShield.zSize1=8.*u.cm #max is 22cm (between -35 and -34.78)
+c.EmShield.zPos1=0.5*(c.EmuMagnet.zC-c.EmuMagnet.Z/2.-c.decayVolume.length/2.-c.muShield.LE) #should center it between EmuMagnet and muShield (-34.89m in the current design)
+c.EmShield.xtrap1=1.6*u.m
+c.EmShield.trapreg=2.*u.m
+#c.EmShield.xSize1=6.*u.m   # for box shield
+#c.EmShield.trapreg=0.*u.m  # for box shield
+
+
+
+c.EmShield.xSize2=3.*u.m #-25 one
+c.EmShield.ySize2=3.*u.m
+c.EmShield.zSize2=0.*u.cm #max thickness= GapD=27 cm
 c.EmShield.xCenter2=0.*u.m
-c.EmShield.zPos2=0.5*(c.EmuMagnet.zC-c.EmuMagnet.Z/2.-c.decayVolume.length/2.-c.muShield.LE) #should center it between EmuMagnet and muShield (-34.89m in the current design)
 c.EmShield.yCenter2=0.*u.m
+c.EmShield.zPos2=-c.decayVolume.length/2. -c.tauMudet.GapD/2.
+

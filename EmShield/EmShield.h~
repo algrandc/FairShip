@@ -46,20 +46,28 @@ class EmShield: public FairDetector
     virtual void Reset();
 
     /** Sets detector position along z */
-    void SetZposition(Double_t z) {fzPos = z;}
+    void SetZposition1(Double_t z) {fzPos1 = z;}
+    void SetZposition2(Double_t z) {fzPos2 = z;}
    /* void SetBarZspacing(Double_t row, Double_t column)
     {
        fdzBarRow = row;
        fdzBarCol = column;
     }*/
-    void SetSizeZ(Double_t dz) {fzSize = dz;}
-    void SetSizeX(Double_t x) {fxSize = x;}
-    void SetSizeY(Double_t y) {fySize = y;}
+    void SetSizeZ1(Double_t dz) {fzSize1 = dz;}
+    void SetSizeX1(Double_t x) {fxSize1 = x;}
+    void SetSizeY1(Double_t y) {fySize1 = y;}
+    
+    void SetSizeZ2(Double_t dz) {fzSize2 = dz;}
+    void SetSizeX2(Double_t x) {fxSize2 = x;}
+    void SetSizeY2(Double_t y) {fySize2 = y;}
 
-  /*  double GetXCol(int ic) const;
-    double GetYRow(int ir) const;
-    void GetBarRowCol(int ib,int &irow,int& icol) const;
-    double GetZBar(int ir,int ic) const;*/
+    //-------------------------------------------------------------------------------------------------
+    void SetTrapezoid(Double_t dy, Double_t trapvol){
+	fXtrap1=dy; //width of the inner face of the trapezoid
+
+	ftrapregion=trapvol; //height of the region constituted of trapezoids (1 trapezoid's height is ftrapregion/2.)
+     }
+
 
     /**  Create the detector geometry */
     void ConstructGeometry();
@@ -93,11 +101,19 @@ class EmShield: public FairDetector
     Double_t       fELoss;              //!  energy loss
 
     /** Detector parameters.*/
-    Double_t     fzPos;     //!  z-position of veto station
+    Double_t     fzPos1;     //!  z-position of veto station
+    Double_t     fzPos2;     //!  z-position of veto station
 
-    Double_t fxSize; //! width of the detector
-    Double_t fySize; //! height of the detector
-    Double_t fzSize;
+    Double_t fxSize1; //! width of the detector
+    Double_t fySize1; //! height of the detector
+    Double_t fzSize1;
+
+    Double_t fXtrap1; //width of the trapezoid's inner face
+    Double_t ftrapregion1;
+    
+    Double_t fxSize2; //! width of the detector
+    Double_t fySize2; //! height of the detector
+    Double_t fzSize2;
 
    /* Double_t fxBar;  //! length of the bar
     Double_t fyBar;  //! width of the bar
@@ -109,8 +125,11 @@ class EmShield: public FairDetector
     Int_t fNCol;    //! Number of columns
     Int_t fNRow;    //! Number of rows*/
     
-    Double_t fxCenter; //! x-position of the detector center
-    Double_t fyCenter; //! y-position of the detector center
+    //Double_t fxCenter1; //! x-position of the detector center
+    //Double_t fyCenter1; //! y-position of the detector center
+
+    Double_t fxCenter2; //! x-position of the detector center
+    Double_t fyCenter2; //! y-position of the detector center
 
     /*Int_t fNBars;    //! Number of bars
     Double_t fxOv;   //! Overlap along x
@@ -126,7 +145,7 @@ class EmShield: public FairDetector
     Int_t InitMedium(const char* name);
 
 
-    ClassDef(EmShield,3)
+    ClassDef(EmShield,4)
 };
 
 #endif //EMSHIELD_H

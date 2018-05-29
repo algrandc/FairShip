@@ -68,6 +68,8 @@ class EmShield: public FairDetector
 	ftrapregion1=trapvol; //height of the region constituted of trapezoids (1 trapezoid's height is ftrapregion1/2.)
      }
 
+    //void SetLayered(Double_t length){ftotallength=length;} 
+
 
     /**  Create the detector geometry */
     void ConstructGeometry();
@@ -110,6 +112,8 @@ class EmShield: public FairDetector
 
     Double_t fXtrap1; //width of the trapezoid's inner face
     Double_t ftrapregion1;
+
+    //Double_t ftotallength; //length of the layered shielding downstream of the muon shield
     
     Double_t fxSize2; //! width of the detector
     Double_t fySize2; //! height of the detector

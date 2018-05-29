@@ -57,6 +57,7 @@ EmShield::EmShield()
     fxSize2(250),
     fySize2(300),
     fzSize2(5),
+    //ftotallength(22),
     //fxCenter2(0),
     //fyCenter2(0),
     fXtrap1(),
@@ -89,6 +90,7 @@ EmShield::EmShield(const char* name, Bool_t active) //**************************
     fxSize1(150),
     fySize1(200),
     fzSize1(5),
+    //ftotallength(22),
     //fxCenter1(0),
     //fyCenter1(0),
     fzPos2(-3488),
@@ -177,7 +179,7 @@ Bool_t  EmShield::ProcessHits(FairVolume* vol)
     }
     gGeoManager->PrintOverlaps();
     TParticle* p = gMC->GetStack()->GetCurrentTrack();
-    Int_t pdgCode = p->GetPdgCode(); //****************************** ADD HERE PYTHIA CODE
+    Int_t pdgCode = p->GetPdgCode(); 
     TLorentzVector Pos;
     gMC->TrackPosition(Pos);
     TLorentzVector Mom;
@@ -247,13 +249,12 @@ void EmShield::ConstructGeometry()
   InitMedium("Lead");
   TGeoMedium *Lead =gGeoManager->GetMedium("Lead");
 
-  InitMedium("vacuum");
-  TGeoMedium *Vac =gGeoManager->GetMedium("vacuum");
+  InitMedium("SensVacuum");
+  TGeoMedium *Vac =gGeoManager->GetMedium("SensVacuum");
   
   ///////////////////////////////////////////////////////
 
   fDetector = new TGeoVolumeAssembly("Electromagnetic Shield");
-
 
 //-------------------------------------HOURGLASS shape at -35---------------------------------------
 
@@ -272,7 +273,7 @@ void EmShield::ConstructGeometry()
   TGeoHMatrix *hmatup= new TGeoHMatrix(combup);
   
   TGeoVolume *trapup = gGeoManager->MakeTrd2("EmShieldtrapup", Lead, fXtrap1/2. ,fxSize1/2.,fzSize1/2.,fzSize1/2., ftrapregion1/4.);
-  trapup->SetLineColor(kRed);
+  trapup->SetLineColor(kYellow);
   AddSensitiveVolume(trapup);
   fDetector->AddNode(trapup, 1, hmatup ); //upper trapezoid
 
@@ -285,10 +286,76 @@ void EmShield::ConstructGeometry()
   TGeoHMatrix *hmatdown= new TGeoHMatrix(combdown);
 
   TGeoVolume *trapdown = gGeoManager->MakeTrd2("EmShieldtrapdown", Lead, fxSize1/2. ,fXtrap1/2.,fzSize1/2.,fzSize1/2., ftrapregion1/4.);
-  trapdown->SetLineColor(kGreen);
+  trapdown->SetLineColor(kYellow);
   AddSensitiveVolume(trapdown);
   fDetector->AddNode(trapdown, 1, hmatdown ); //lower trapezoid
 
+
+
+
+
+
+
+
+//-------------------------------------HOURGLASS shape at -35---------------------------------------
+ /*   TGeoVolume* hourglass = new TGeoVolumeAssembly("hourglass");
+  TGeoVolume* layered = new TGeoVolumeAssembly("layered");
+
+
+
+  TGeoVolume *plateup = gGeoManager->MakeBox("EmShieldbox", Lead, fxSize1/2.,(fySize1-ftrapregion1)/4.,fzSize1/2.); 
+  plateup->SetLineColor(kYellow);
+  AddSensitiveVolume(plateup);
+  hourglass->AddNode(plateup, 1, new TGeoTranslation( 0.,(fySize1+ftrapregion1)/4.,fzPos1) ); //upper box
+  hourglass->AddNode(plateup, 1, new TGeoTranslation( 0.,(fySize1+ftrapregion1)/(-4.),fzPos1) ); //lower box
+
+
+  TGeoRotation rotup;
+  TGeoTranslation transup;
+  rotup.RotateX(-90);
+  transup.SetTranslation( 0.,ftrapregion1/4.,fzPos1 );
+  TGeoCombiTrans combup(transup,rotup);
+  TGeoHMatrix *hmatup= new TGeoHMatrix(combup);
+  
+  TGeoVolume *trapup = gGeoManager->MakeTrd2("EmShieldtrapup", Lead, fXtrap1/2. ,fxSize1/2.,fzSize1/2.,fzSize1/2., ftrapregion1/4.);
+  trapup->SetLineColor(kYellow);
+  AddSensitiveVolume(trapup);
+  hourglass->AddNode(trapup, 1, hmatup ); //upper trapezoid
+
+
+  TGeoRotation rotdown;
+  TGeoTranslation transdown;
+  rotdown.RotateX(-90);
+  transdown.SetTranslation( 0.,ftrapregion1/(-4.),fzPos1);
+  TGeoCombiTrans combdown(transdown,rotdown);
+  TGeoHMatrix *hmatdown= new TGeoHMatrix(combdown);
+
+  TGeoVolume *trapdown = gGeoManager->MakeTrd2("EmShieldtrapdown", Lead, fxSize1/2. ,fXtrap1/2.,fzSize1/2.,fzSize1/2., ftrapregion1/4.);
+  trapdown->SetLineColor(kYellow);
+  AddSensitiveVolume(trapdown);
+  hourglass->AddNode(trapdown, 1, hmatdown ); //lower trapezoid
+//-----------------------------------MULTIPLE LAYERS------------------------------------------ 
+ 
+  Int_t NPlates=ftotallength/(fzSize1+0.1);//+ 1mm to take into account the gap with the active layers
+
+ for(Int_t n=0; n<NPlates+1; n++)
+    {
+      layered->AddNode(hourglass, n, new TGeoTranslation(0,0,-ftotallength/2. +0.05 + (2*n+1)*(0.05 +fzSize1/2.)));
+    }
+
+    fDetector->AddNode(layered, 1, new TGeoTranslation( 0,0,0) );
+*/
+
+ /* Int_t NPlates=ftotallength/(fzSize1);
+
+  for(Int_t n=0; n<NPlates+1; n++)
+    {
+      layered->AddNode(hourglass, n, new TGeoTranslation(0,0,-ftotallength/2.  + (2*n+1)*(fzSize1/2.)));
+    }
+
+    fDetector->AddNode(layered, 1, new TGeoTranslation( 0,0,0) );
+
+*/
 
 //-----------------------------------BOX SHAPE -25--------------------------------------------
 

@@ -12,13 +12,13 @@ from ShipGeoConfig import AttrDict, ConfigRegistry
 if "muShieldDesign" not in globals():
     muShieldDesign = 5
 if "nuTargetPassive" not in globals():
-    nuTargetPassive = 1
+    nuTargetPassive = 1 
 if "nuTauTargetDesign" not in globals():
     nuTauTargetDesign = 0
     if muShieldDesign == 7: 
         nuTauTargetDesign=1
 if "targetOpt" not in globals():
-    targetOpt = 18
+    targetOpt = 18 
 if "strawDesign" not in globals():
     strawDesign = 4
 if "tankDesign" not in globals():
@@ -37,8 +37,7 @@ if "HcalGeoFile" not in globals():
         HcalGeoFile = "hcal_rect.geo"
     else:
         HcalGeoFile = "hcal.geo"
-if "emdesign" not in globals():
-    emdesign = 0
+
 
 with ConfigRegistry.register_config("basic") as c:
     # global muShieldDesign, targetOpt, strawDesign, Yheight
@@ -575,7 +574,8 @@ with ConfigRegistry.register_config("basic") as c:
         c.NuTauTarget.col=7
         c.NuTauTarget.wall=19
         
-    c.NuTauTarget.nuTargetPassive = nuTargetPassive
+#    c.NuTauTarget.nuTargetPassive = nuTargetPassive
+    c.NuTauTarget.nuTargetPassive = 0 #######I changed it to have an active volume
 
     c.NuTauTarget.Ydist = 0.2*u.cm
     
@@ -681,23 +681,59 @@ c.TimeDet.DY = 500 * u.cm
 #c.EmShield.yCenter2=0.*u.m
 
 
+####For the hourglass shape
+#c.EmShield  =  AttrDict(z=0*u.m) 
+#c.EmShield.xSize1=3.2*u.m # -35 one
+#c.EmShield.ySize1=6.*u.m
+#c.EmShield.zSize1=0.*u.cm #max is 22cm (between -35 and -34.78)
+#c.EmShield.zPos1=0.5*(c.EmuMagnet.zC-c.EmuMagnet.Z/2.-c.decayVolume.length/2.-c.muShield.LE) #should center it between EmuMagnet and muShield (-34.89m in the current design)
+#c.EmShield.xtrap1=1.6*u.m
+#c.EmShield.trapreg=2.*u.m
+
+
+#For the hourglass shape after parametrisation
+c.emrectheight=emrectheight
+c.emtrapheight=emtrapheight
+c.emthick=emthick
+c.emtrapwidth=emtrapwidth
+c.emdensity=emdensity
+c.emwidth=emwidth
 
 c.EmShield  =  AttrDict(z=0*u.m) 
-c.EmShield.xSize1=3.2*u.m # -35 one
-c.EmShield.ySize1=6.*u.m
-c.EmShield.zSize1=1.*u.cm #max is 22cm (between -35 and -34.78)
+c.EmShield.trapreg=emtrapheight*u.cm
+c.EmShield.xSize1=emwidth*u.cm # -35 one
+c.EmShield.ySize1=2*emrectheight*u.cm+emtrapheight*u.cm
+c.EmShield.zSize1=emthick*u.mm #max is 22cm (between -35 and -34.78)
 c.EmShield.zPos1=0.5*(c.EmuMagnet.zC-c.EmuMagnet.Z/2.-c.decayVolume.length/2.-c.muShield.LE) #should center it between EmuMagnet and muShield (-34.89m in the current design)
-c.EmShield.xtrap1=1.6*u.m
-c.EmShield.trapreg=2.*u.m
-#c.EmShield.xSize1=6.*u.m   # for box shield
-#c.EmShield.trapreg=0.*u.m  # for box shield
+c.EmShield.xtrap1=emtrapwidth*u.cm ###
+
+
+print "a: ",(c.EmShield.ySize1-c.EmShield.trapreg)/2,", b: ",c.EmShield.xSize1,", c: ",c.EmShield.trapreg,", d: ",c.EmShield.xtrap1,", z: ",c.EmShield.zSize1
 
 
 
+#(thickness set to 0=> doesn't matter
 c.EmShield.xSize2=3.*u.m #-25 one
 c.EmShield.ySize2=3.*u.m
 c.EmShield.zSize2=0.*u.cm #max thickness= GapD=27 cm
 c.EmShield.xCenter2=0.*u.m
 c.EmShield.yCenter2=0.*u.m
 c.EmShield.zPos2=-c.decayVolume.length/2. -c.tauMudet.GapD/2.
+
+
+
+
+c.SensVollarge  =  AttrDict(z=0*u.m) 
+c.SensVollarge.xSize2=c.EmShield.xSize1 + 2.*u.m #-25 one
+c.SensVollarge.ySize2=c.EmShield.ySize1 + 2.*u.m 
+c.SensVollarge.zSize2=0.1*u.cm
+c.SensVollarge.xCenter2=0.*u.m
+c.SensVollarge.yCenter2=0.*u.m
+c.SensVollarge.zPos2=c.EmShield.zPos1
+c.SensVollarge.totallength=c.EmShield.zSize1
+c.SensVollarge.spacing=c.EmShield.zSize1
+
+
+
+
 

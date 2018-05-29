@@ -82,7 +82,7 @@ def configure(run,ship_geo):
  if not hasattr(ship_geo,'NuTauTT') : ship_geo.NuTauTT= AttrDict(z=0*u.cm)
  if not hasattr(ship_geo.NuTauTT,'design') : ship_geo.NuTauTT.design = 0
  if not hasattr(ship_geo,'EcalOption'):     ship_geo.EcalOption = 1      
- latestShipGeo = ConfigRegistry.loadpy("$FAIRSHIP/geometry/geometry_config.py",Yheight = ship_geo.Yheight/u.m, tankDesign = ship_geo.tankDesign, muShieldDesign = ship_geo.muShieldDesign, nuTauTargetDesign = ship_geo.nuTauTargetDesign)
+ latestShipGeo = ConfigRegistry.loadpy("$FAIRSHIP/geometry/geometry_config.py",Yheight = ship_geo.Yheight/u.m, tankDesign = ship_geo.tankDesign, muShieldDesign = ship_geo.muShieldDesign, nuTauTargetDesign = ship_geo.nuTauTargetDesign,emrectheight=ship_geo.emrectheight,emwidth=ship_geo.emwidth,emtrapwidth=ship_geo.emtrapwidth, emtrapheight=ship_geo.emtrapheight,emthick=ship_geo.emthick, emdensity=ship_geo.emdensity)
 # -----Create media-------------------------------------------------
  run.SetMaterials("media.geo")  # Materials
 # ------------------------------------------------------------------------
@@ -347,8 +347,7 @@ def configure(run,ship_geo):
  emShield.SetSizeY1(ship_geo.EmShield.ySize1)
  emShield.SetSizeZ1(ship_geo.EmShield.zSize1)
  emShield.SetZposition1(ship_geo.EmShield.zPos1)
- emShield.SetTrapezoid(ship_geo.EmShield.ytrap1,ship_geo.EmShield.trapreg)
-
+ emShield.SetTrapezoid(ship_geo.EmShield.xtrap1,ship_geo.EmShield.trapreg)
  emShield.SetSizeX2(ship_geo.EmShield.xSize2)
  emShield.SetSizeY2(ship_geo.EmShield.ySize2)
  emShield.SetSizeZ2(ship_geo.EmShield.zSize2)
@@ -357,6 +356,15 @@ def configure(run,ship_geo):
  detectorList.append(emShield)
 
 
+ sensvollarge = ROOT.SensVollarge("SensVollarge", ROOT.kTRUE)
+ sensvollarge.SetSizeX2(ship_geo.SensVollarge.xSize2)
+ sensvollarge.SetSizeY2(ship_geo.SensVollarge.ySize2)
+ sensvollarge.SetSizeZ2(ship_geo.SensVollarge.zSize2)
+ sensvollarge.SetZposition2(ship_geo.SensVollarge.zPos2)
+ sensvollarge.SetLength(ship_geo.SensVollarge.totallength)
+ sensvollarge.SetSpacing(ship_geo.SensVollarge.spacing)
+
+ detectorList.append(sensvollarge)
 
 #-----   Magnetic field   -------------------------------------------
  if ship_geo.strawDesign == 4 or ship_geo.strawDesign == 10: fMagField = ROOT.ShipBellField("wilfried", ship_geo.Bfield.max ,ship_geo.Bfield.z,2,ship_geo.Yheight/2.*u.m )  

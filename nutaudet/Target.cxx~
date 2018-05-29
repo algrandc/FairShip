@@ -253,7 +253,7 @@ void Target::ConstructGeometry()
   TGeoMedium *vacuum =gGeoManager->GetMedium("vacuum");
 
   InitMedium("SensVacuum");
-  TGeoMedium *sensvac =gGeoManager->GetMedium("SensVacuum");
+  TGeoMedium *SensVac =gGeoManager->GetMedium("SensVacuum");
     
   InitMedium("iron");
   TGeoMedium *Fe =gGeoManager->GetMedium("iron");
@@ -285,7 +285,7 @@ void Target::ConstructGeometry()
 
   //Definition of the target box containing emulsion bricks + (CES if fDesign = 0 o 1) + target trackers (TT) 
   TGeoBBox *TargetBox = new TGeoBBox("TargetBox",XDimension/2, YDimension/2, ZDimension/2);
-  TGeoVolume *volTarget = new TGeoVolume("volTarget",TargetBox,sensvac);
+  TGeoVolume *volTarget = new TGeoVolume("volTarget",TargetBox,SensVac);
       	  AddSensitiveVolume(volTarget);
   // In both fDesign=0 & fDesign=1 the emulsion target is inserted within a magnet
   if(fDesign!=2)
@@ -328,13 +328,13 @@ void Target::ConstructGeometry()
     
     
     
-  
+ /*   
 
     
   //
   //Volumes definition
   //
- /*
+ 
   TGeoBBox *Cell = new TGeoBBox("cell", BrickX/2, BrickY/2, CellWidth/2);
   TGeoVolume *volCell = new TGeoVolume("Cell",Cell,vacuum);
     
@@ -447,9 +447,9 @@ void Target::ConstructGeometry()
 	}
     }
 
-*/
+
   //in fDesign==2 the emulsion target is not surrounded by a magnet => no magnetic field inside
-  //In the no Magnetic field option, no CES is needed => only brick walls + TT
+  //In the no Magnetic field option, no CES is needed => only brick walls + TT*/
     
   if(fDesign==2)
     {
@@ -458,8 +458,8 @@ void Target::ConstructGeometry()
       TGeoVolume *tTauNuDet = gGeoManager->GetVolume("tTauNuDet");  
       cout<< "Tau Nu Detector fMagnetConfig: "<< fDesign<<endl;
       tTauNuDet->AddNode(volTarget,1,new TGeoTranslation(0,0,fCenterZ));
-	/*
-   
+	
+   /*
        TGeoBBox *Row = new TGeoBBox("row",XDimension/2, BrickY/2, CellWidth/2);
       TGeoVolume *volRow = new TGeoVolume("Row",Row,vacuum);
       volRow->SetLineColor(20);
@@ -494,12 +494,12 @@ void Target::ConstructGeometry()
 	  //6 cm is the distance between 2 columns of consecutive Target for TT placement
 	  d_cl_z += BrickZ + TTrackerZ;
 	}
-      
+      */
       TGeoBBox *Base = new TGeoBBox("Base", fBaseX/2, fBaseY/2, fBaseZ/2);
       TGeoVolume *volBase = new TGeoVolume("volBase",Base,Conc);
       volBase->SetLineColor(kYellow-3);
       tTauNuDet->AddNode(volBase,1, new TGeoTranslation(0,-YDimension/2 - fBaseY/2,fCenterZ));
-*/
+
       if(fDesign==2)
 	{
 	  TGeoBBox *PillarBox = new TGeoBBox(fPillarX/2,fPillarY/2, fPillarZ/2);
